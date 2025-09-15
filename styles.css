@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: cursive;
+}
+
+:root {
+    --black: rgb(22, 22, 22);
+    --white: rgb(250, 250, 250);
+}
+
+/* --------------------------------------top-container--- */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --------------------------------------top-container--- */
+
+/* --------------------------------------header--- */
+
+header{
+    height: 60px;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 6px 20px;
+}
+
+/* --------------------------------------header--- */
+
+/* --------------------------------------main------ */
+
+main{
+    flex: 1;
+}
+
+/* --------------------------------------main------ */
+
+/* --------------------------------------task modal ------- */
+
+.task-modal {
+    display: none;
+    position: fixed;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.task-modal.active{
+    display: flex;
+}
+
+.task-modal-form {
+    display: flex;
+    flex-direction: column;
+}
+/* --------------------------------------task modal ------- */
+
+/* --------------------------------------footer------------ */
+
+footer {
+    margin-top: auto;
+}
+/* --------------------------------------footer------------ */
