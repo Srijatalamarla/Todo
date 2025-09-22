@@ -41,15 +41,28 @@ main{
 
 /* --------------------------------------task modal ------- */
 
-.task-modal {
-    display: none;
+#task-modal-container {
     position: fixed;
-    height: 100vh;
-    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.task-modal.active{
+#task-modal-container.active {
     display: flex;
+}
+
+#task-modal {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    padding: 2rem;
 }
 
 .task-modal-form {

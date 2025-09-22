@@ -13,7 +13,7 @@
         </header>
         <main>
             <h2>Tasks list</h2>
-            <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleModal()">
+            <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
                 <span id="addTaskSign">+</span>
                 <span id="addTaskText">Add new task</span>
             </button>
@@ -22,22 +22,24 @@
                 <li>Pending</li>
                 <li>Completed</li>
             </ul>
-            <div class="task-modal" id="task-modal">
-                <div class="task-modal-header">
-                    <p>Task</p>
-                    <button id="closeBtn" onclick="toggleModal()">x</button>
+            <div class="task-modal-container" id="task-modal-container">
+                <div class="task-modal" id="task-modal">
+                    <div class="task-modal-header">
+                        <p>Task</p>
+                        <button id="closeBtn" onclick="toggleTaskModal('close')">x</button>
+                    </div>
+                    <form id="task-modal-form" class="task-modal-form" action="">
+                        <label for="taskTitle">Title</label>
+                        <input type="text" name="taskTitle" id="taskTitle" placeholder="Write a title for your task..." required></input>
+                        <label for="taskDesc">Description</label>
+                        <textarea name="taskDesc" id="taskDesc" placeholder="Describe your thoughts..."></textarea>
+                
+                        <label for="taskDeadline">Deadline</label>
+                        <input type="date" name="taskDeadline" id="taskDeadline"></input>
+                        <input type="submit" id="submitTaskBtn"></input>
+                        <button onclick="toggleTaskModal('close')">Cancel</button>
+                    </form>
                 </div>
-                <form class="task-modal-form" action="">
-                    <label for="taskTitle">Title</label>
-                    <input type="text" name="taskTitle" id="taskTitle" placeholder="Write a title for your task..."></input>
-        
-                    <label for="taskDesc">Description</label>
-                    <textarea name="taskDesc" id="taskDesc" placeholder="Describe your thoughts..."></textarea>
-                    <label for="taskDeadline">Deadline</label>
-                    <input type="date" name="taskDeadline" id="taskDeadline"></input>
-                    <button>Create Task</button>
-                    <button onclick="toggleModal()">Cancel</button>
-                </form>
             </div>
         </main>
         <footer>
