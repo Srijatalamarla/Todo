@@ -13,20 +13,34 @@
         </header>
         <main>
             <h2>Tasks list</h2>
-            <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
-                <span id="addTaskSign">+</span>
-                <span id="addTaskText">Add new task</span>
-            </button>
-            <ul>
-                <li>All</li>
-                <li>Pending</li>
-                <li>Completed</li>
-            </ul>
+            <div class="add-task-container" id="add-task-container">
+                <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
+                    <span id="addTaskSign">+</span>
+                    <span id="addTaskText">Add new task</span>
+                </button>
+            </div>
+            <div class="tasks-container" id="tasks-container">
+                <ul class="task-selector">
+                    <li>All</li>
+                    <li>Pending</li>
+                    <li>Completed</li>
+                </ul>
+                <div class="task-items-container">
+                    <ul class="task-items-list">
+                        <li class="task-item">
+                            <p class="task-item-title">Title</p>
+                            <p class="task-item-desc">Description</p>
+                            <p class="task-item-deadline">Deadline</p>
+                            <p class="task-item-completed">Completed</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="task-modal-container" id="task-modal-container">
                 <div class="task-modal" id="task-modal">
                     <div class="task-modal-header">
                         <p>Task</p>
-                        <button id="closeBtn" onclick="toggleTaskModal('close')">x</button>
+                        <button type="button" id="closeBtn" onclick="toggleTaskModal('close')">x</button>
                     </div>
                     <form id="task-modal-form" class="task-modal-form" action="">
                         <label for="taskTitle">Title</label>
@@ -37,7 +51,7 @@
                         <label for="taskDeadline">Deadline</label>
                         <input type="date" name="taskDeadline" id="taskDeadline"></input>
                         <input type="submit" id="submitTaskBtn"></input>
-                        <button onclick="toggleTaskModal('close')">Cancel</button>
+                        <button type="button" onclick="toggleTaskModal('close')">Cancel</button>
                     </form>
                 </div>
             </div>
