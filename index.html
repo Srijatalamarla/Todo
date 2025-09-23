@@ -20,19 +20,22 @@
                 </button>
             </div>
             <div class="tasks-container" id="tasks-container">
-                <ul class="task-selector">
-                    <li>All</li>
-                    <li>Pending</li>
-                    <li>Completed</li>
+                <ul class="task-selector-container">
+                    <li class="task-selector" id="all" data-id="all">All</li>
+                    <li class="task-selector" id="pending" data-id="pending">Pending</li>
+                    <li class="task-selector" id="completed" data-id="completed">Completed</li>
                 </ul>
                 <div class="task-items-container">
                     <ul class="task-items-list">
-                        <li class="task-item">
-                            <p class="task-item-title">Title</p>
-                            <p class="task-item-desc">Description</p>
-                            <p class="task-item-deadline">Deadline</p>
-                            <p class="task-item-completed">Completed</p>
-                        </li>
+                        <!-- <li class="task-item" data-id=`${task.id}`>
+                            <p class="task-item-title">${task.title}</p>
+                            <p class="task-item-desc">${task.description}</p>
+                            <p class="task-item-deadline">${task.deadline}</p>
+                            <p class="task-item-completed">${task.completed}</p>
+                            <button class="task-item-btn" onclick="toggleCompletion()">Completed</button>
+                            <button class="task-item-btn">Edit</button>
+                            <button class="task-item-btn">Delete</button>
+                        </li> -->
                     </ul>
                 </div>
             </div>

@@ -22,7 +22,7 @@
 
 /* --------------------------------------header--- */
 
-header{
+header {
     height: 60px;
     background-color: var(--black);
     color: var(--white);
@@ -33,7 +33,7 @@ header{
 
 /* --------------------------------------main------ */
 
-main{
+main {
     flex: 1;
 }
 
@@ -69,11 +69,50 @@ main{
     display: flex;
     flex-direction: column;
 }
+
 /* --------------------------------------task modal ------- */
+
+
+/* --------------------------------------task items container ------- */
+
+.task-items-list {
+    display: flex;
+}
+
+
+/* --------------------------------------task items container ------- */
+
+/* --------------------------------------task item ------- */
+
+.task-item {
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+
+/* --------------------------------------task item ------- */
+
+
+/* --------------------------------------task selector ------- */
+
+.task-selector-container {
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    list-style: none;
+}
+
+/* --------------------------------------task selector ------- */
+
+
 
 /* --------------------------------------footer------------ */
 
 footer {
     margin-top: auto;
 }
+
 /* --------------------------------------footer------------ */

@@ -1,8 +1,18 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 const taskModal = document.getElementById('task-modal-container')
 let formMode = "add"
+let currFilter = "all"
 
-document.addEventListener('DOMContentLoaded', loadTasks)
+//event listeners
+document.addEventListener('DOMContentLoaded', loadTasks(currFilter))
+
+document.querySelectorAll(".task-selector").forEach(selector => {
+    // console.log(selector.getAttribute('data-id'))
+    selector.addEventListener('click', () => {
+        currFilter = selector.getAttribute('data-id')
+        loadTasks(currFilter)
+    })
+})
 
 function toggleTaskModal(mode) {
     console.log(mode)
@@ -22,6 +32,7 @@ function toggleTaskModal(mode) {
         taskModal.classList.remove('active')
         document.getElementById('task-modal-form').reset()
     }
+    loadTasks(currFilter)
 }
 
 
@@ -60,11 +71,11 @@ function addNewTask() {
 
     console.log(newTask)
     saveTask(newTask)
-
+    loadTasks(currFilter)
     toggleTaskModal('close')
 }
 
-function loadTasks() {
+function loadTasks(filter) {
     const addTaskContainer = document.getElementById("add-task-container")
     const tasksContainer = document.getElementById('tasks-container')
 
@@ -81,9 +92,38 @@ function loadTasks() {
         addTaskContainer.classList.remove('large')
         tasksContainer.style.display = 'block'
 
-        const tasksList = document.querySelector('task-items-list')
-        tasks.array.forEach(element => {
-            console.log(element)
+        const tasksList = document.querySelector('.task-items-list')
+        tasksList.innerHTML = ``; // clear
+
+        let filteredTasks = [...tasks]
+
+        //filter if any
+        if (filter === "pending") {
+            filteredTasks = tasks.filter(task => task.completed === false)
+        }
+        else if (filter === "completed") {
+            filteredTasks = tasks.filter(task => task.completed === true)
+        }
+        console.log(filter)
+        console.log(filteredTasks)
+        console.log(tasks)
+
+        filteredTasks.forEach(task => {
+            const taskItem = document.createElement('li')
+            taskItem.innerHTML =
+                `
+                <p class="task-item-title">${task.title}</p>
+                <p class="task-item-desc">${task.description}</p>
+                <p class="task-item-deadline">${task.deadline}</p>
+                <p class="task-item-completed">${task.completed}</p>
+                <button class="task-item-btn" id="task-completion-btn">Completed</button>
+                <button class="task-item-btn" id="task-edit-btn">Edit</button>
+                <button class="task-item-btn" id="task-delete-btn">Delete</button>
+            `
+            taskItem.classList.add('task-item')
+            taskItem.setAttribute('data-id', `${task.id}`)
+
+            tasksList.append(taskItem)
         });
     }
 }
@@ -92,6 +132,13 @@ function updateTask() {
     console.log("UPDATE TASK")
 }
 
+const toggleCompletion = function (taskId) {
+    console.log(taskId)
+    let taskIndex = tasks.findIndex(task => task.id === taskId)
+    let taskCompleted = tasks[taskIndex].completed
+    tasks[taskIndex].completed = !taskCompleted
+    loadTasks(currFilter)
+}
 const saveTask = function (task) {
     tasks.push(task)
     localStorage.setItem('tasks', JSON.stringify(tasks))
