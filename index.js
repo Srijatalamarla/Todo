@@ -7,16 +7,14 @@ let currFilter = "all"
 document.addEventListener('DOMContentLoaded', loadTasks(currFilter))
 
 document.querySelectorAll(".task-selector").forEach(selector => {
-    // console.log(selector.getAttribute('data-id'))
     selector.addEventListener('click', () => {
         currFilter = selector.getAttribute('data-id')
         loadTasks(currFilter)
     })
 })
 
-function toggleTaskModal(mode) {
-    console.log(mode)
-    console.log(tasks.length)
+function toggleTaskModal(mode, event) {
+
     const submitTaskBtn = document.getElementById('submitTaskBtn')
     if (mode === 'add') {
         taskModal.classList.add('active')
@@ -27,10 +25,17 @@ function toggleTaskModal(mode) {
         taskModal.classList.add('active')
         submitTaskBtn.value = "Update Task"
         formMode = "update"
+        let taskId = event.target.parentElement.dataset.id
+        populateFields(taskId)
+
+        document.getElementById('submitTaskBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            updateTask(taskId)    
+        });
     }
     else if (mode === 'close') {
         taskModal.classList.remove('active')
-        document.getElementById('task-modal-form').reset()
+        document.getElementById('task-modal-form').reset() //clear all fields in form
     }
     loadTasks(currFilter)
 }
@@ -39,21 +44,14 @@ function toggleTaskModal(mode) {
 document.getElementById('submitTaskBtn').addEventListener('click', (e) => {
     e.preventDefault();
     if (formMode === "add") addNewTask();
-    if (formMode === "update") updateTask();
 });
 
 
 function addNewTask() {
-    console.log("ADD NEW TASK")
 
     const taskTitle = document.getElementById('taskTitle').value;
     const taskDesc = document.getElementById('taskDesc').value;
     const taskDeadline = document.getElementById('taskDeadline').value;
-
-
-    console.log(taskTitle)
-    console.log(taskDesc)
-    console.log(taskDeadline)
 
     if (taskTitle === "") {
         alert("Please enter title of your task")
@@ -68,10 +66,9 @@ function addNewTask() {
         createdAt: Date.now(),
         completed: false
     }
+    tasks.push(newTask)
 
-    console.log(newTask)
-    saveTask(newTask)
-    loadTasks(currFilter)
+    saveTasks(tasks)
     toggleTaskModal('close')
 }
 
@@ -80,10 +77,6 @@ function loadTasks(filter) {
     const tasksContainer = document.getElementById('tasks-container')
 
     if (tasks.length === 0) {
-
-        console.log("no elements")
-        console.log(addTaskContainer)
-        console.log(tasksContainer)
 
         addTaskContainer.classList.add('large')
         tasksContainer.style.display = 'none'
@@ -104,9 +97,6 @@ function loadTasks(filter) {
         else if (filter === "completed") {
             filteredTasks = tasks.filter(task => task.completed === true)
         }
-        console.log(filter)
-        console.log(filteredTasks)
-        console.log(tasks)
 
         filteredTasks.forEach(task => {
             const taskItem = document.createElement('li')
@@ -116,9 +106,9 @@ function loadTasks(filter) {
                 <p class="task-item-desc">${task.description}</p>
                 <p class="task-item-deadline">${task.deadline}</p>
                 <p class="task-item-completed">${task.completed}</p>
-                <button class="task-item-btn" id="task-completion-btn">Completed</button>
-                <button class="task-item-btn" id="task-edit-btn">Edit</button>
-                <button class="task-item-btn" id="task-delete-btn">Delete</button>
+                <button class="task-item-btn" id="task-completion-btn" onclick="toggleCompletion(event)">Completed</button>
+                <button class="task-item-btn" id="task-edit-btn" onclick="toggleTaskModal('update', event)">Edit</button>
+                <button class="task-item-btn" id="task-delete-btn" onclick="deleteTask(event)">Delete</button>
             `
             taskItem.classList.add('task-item')
             taskItem.setAttribute('data-id', `${task.id}`)
@@ -128,21 +118,54 @@ function loadTasks(filter) {
     }
 }
 
-function updateTask() {
-    console.log("UPDATE TASK")
+function updateTask(taskId) {
+
+    const updatedTaskTitle = document.getElementById('taskTitle').value;
+    const updatedTaskDesc = document.getElementById('taskDesc').value;
+    const updatedTaskDeadline = document.getElementById('taskDeadline').value;
+
+    let task = tasks[tasks.findIndex(task => task.id === taskId)]
+
+    task.title = updatedTaskTitle
+    task.description = updatedTaskDesc
+    task.deadline = updatedTaskDeadline
+
+    saveTasks(tasks)
+    toggleTaskModal('close')
 }
 
-const toggleCompletion = function (taskId) {
-    console.log(taskId)
+function populateFields(taskId) {
+
+    let task = tasks[tasks.findIndex(task => task.id === taskId)]
+
+    const taskTitleElem = document.getElementById('taskTitle');
+    const taskDescElem = document.getElementById('taskDesc');
+    const taskDeadlineElem = document.getElementById('taskDeadline');
+
+    taskTitleElem.value = task.title
+    taskDescElem.value = task.description
+    taskDeadlineElem.value = task.deadline
+
+}
+
+function deleteTask(e) {
+    let taskId = e.target.parentElement.dataset.id
+    tasks = tasks.filter(task => task.id !== taskId)
+    saveTasks(tasks)
+    loadTasks(currFilter)
+}
+
+const toggleCompletion = function (e) {
+    let taskId = e.target.parentElement.dataset.id
     let taskIndex = tasks.findIndex(task => task.id === taskId)
     let taskCompleted = tasks[taskIndex].completed
     tasks[taskIndex].completed = !taskCompleted
     loadTasks(currFilter)
 }
-const saveTask = function (task) {
-    tasks.push(task)
+
+
+const saveTasks = function (tasks) {
     localStorage.setItem('tasks', JSON.stringify(tasks))
-    console.log("SAVED")
 }
 
 const uid = function () {
