@@ -13,12 +13,14 @@
             <h1>Todo</h1>
         </header>
         <main>
-            <h2 id="main-title">Tasks list</h2>
-            <div class="add-task-container" id="add-task-container">
-                <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
-                    <span id="addTaskSign">+</span>
-                    <span id="addTaskText">Add new task</span>
-                </button>
+            <div class="main-title-container">
+                <h2 id="main-title">Tasks list</h2>
+                <div class="add-task-container" id="add-task-container">
+                    <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
+                        <span id="addTaskSign">+</span>
+                        <span id="addTaskText">Add new task</span>
+                    </button>
+                </div>
             </div>
             <div class="tasks-container" id="tasks-container">
                 <ul class="task-selector-container">
@@ -63,7 +65,8 @@
                         </div>
 
                         <div class="form-btns form-input-section">
-                            <button type="submit" id="submitTaskBtn"></button>
+                            <button type="submit" id="modal-addTaskBtn" onclick="addNewTask()">Create New Task</button>
+                            <button type="submit" id="modal-updateTaskBtn">Update Task</button>
                             <button type="button" onclick="toggleTaskModal('close')">Cancel</button>
                         </div>
 

@@ -1,34 +1,48 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 const taskModal = document.getElementById('task-modal-container')
-let formMode = "add"
 let currFilter = "all"
 
 //event listeners
-document.addEventListener('DOMContentLoaded', loadTasks(currFilter))
+document.addEventListener('DOMContentLoaded', () => {
+    addActiveStyle(currFilter)
+    loadTasks(currFilter)
+})
 
 document.querySelectorAll(".task-selector").forEach(selector => {
     selector.addEventListener('click', () => {
         currFilter = selector.getAttribute('data-id')
+        addActiveStyle(currFilter)
         loadTasks(currFilter)
     })
 })
 
-function toggleTaskModal(mode, event) {
+const addActiveStyle = (filter) => {
+    document.querySelectorAll('.task-selector').forEach(selector => {
+        if(selector.dataset.id === filter)
+            selector.classList.add('active')
+        else
+            selector.classList.remove('active')
+    })
+}
 
-    const submitTaskBtn = document.getElementById('submitTaskBtn')
+function toggleTaskModal(mode, taskId) {
+
+    const addTaskBtn = document.getElementById('modal-addTaskBtn')
+    const updateTaskBtn = document.getElementById('modal-updateTaskBtn')
+
     if (mode === 'add') {
         taskModal.classList.add('active')
-        submitTaskBtn.textContent = "Create New Task"
-        formMode = "add"
+        addTaskBtn.style.display = 'block'
+        updateTaskBtn.style.display = 'none'
     }
     else if (mode === 'update') {
         taskModal.classList.add('active')
-        submitTaskBtn.textContent = "Update Task"
-        formMode = "update"
-        let taskId = event.target.parentElement.dataset.id
+        addTaskBtn.style.display = 'none'
+        updateTaskBtn.style.display = 'block'
+
         populateFields(taskId)
 
-        document.getElementById('submitTaskBtn').addEventListener('click', (e) => {
+        updateTaskBtn.addEventListener('click', (e) => {
             e.preventDefault();
             updateTask(taskId)    
         });
@@ -39,13 +53,6 @@ function toggleTaskModal(mode, event) {
     }
     loadTasks(currFilter)
 }
-
-
-document.getElementById('submitTaskBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    if (formMode === "add") addNewTask();
-});
-
 
 function addNewTask() {
 
@@ -75,15 +82,17 @@ function addNewTask() {
 function loadTasks(filter) {
     const addTaskContainer = document.getElementById("add-task-container")
     const tasksContainer = document.getElementById('tasks-container')
+    const mainTitleContainer = document.querySelector('.main-title-container')
 
     if (tasks.length === 0) {
-
         addTaskContainer.classList.add('large','dashed')
         tasksContainer.style.display = 'none'
+        mainTitleContainer.style.display = 'block'
     }
     else {
-        addTaskContainer.classList.remove('large')
+        addTaskContainer.classList.remove('large', 'dashed')
         tasksContainer.style.display = 'block'
+        mainTitleContainer.style.display = 'flex'
 
         const tasksList = document.querySelector('.task-items-list')
         tasksList.innerHTML = ``; // clear
@@ -103,12 +112,19 @@ function loadTasks(filter) {
             taskItem.innerHTML =
                 `
                 <p class="task-item-title">${task.title}</p>
-                <p class="task-item-desc">${task.description}</p>
-                <p class="task-item-deadline">${task.deadline}</p>
-                <p class="task-item-completed">${task.completed}</p>
-                <button class="task-item-btn" id="task-completion-btn" onclick="toggleCompletion(event)">Completed</button>
-                <button class="task-item-btn" id="task-edit-btn" onclick="toggleTaskModal('update', event)">Edit</button>
-                <button class="task-item-btn" id="task-delete-btn" onclick="deleteTask(event)">Delete</button>
+                <p class="task-item-desc">
+                    <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
+                </p>
+                <p class="task-item-deadline">
+                    <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
+                </p>
+                <div class="task-item-btn-container">
+                    <button type="button" class="task-item-btn" id="task-completion-btn" onclick="toggleCompletion('${task.id}')">
+                        ${task.completed === true ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-check"></i>'}
+                    </button>
+                    <button type="button" class="task-item-btn" id="task-edit-btn" onclick="toggleTaskModal('update', '${task.id}')"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="task-item-btn" id="task-delete-btn" onclick="deleteTask('${task.id}')"><i class="fa-solid fa-trash"></i></button>
+                </div>
             `
             taskItem.classList.add('task-item')
             taskItem.setAttribute('data-id', `${task.id}`)
@@ -124,7 +140,9 @@ function updateTask(taskId) {
     const updatedTaskDesc = document.getElementById('taskDesc').value;
     const updatedTaskDeadline = document.getElementById('taskDeadline').value;
 
-    let task = tasks[tasks.findIndex(task => task.id === taskId)]
+    let task = tasks.find(task => task.id === taskId)
+
+
 
     task.title = updatedTaskTitle
     task.description = updatedTaskDesc
@@ -148,15 +166,13 @@ function populateFields(taskId) {
 
 }
 
-function deleteTask(e) {
-    let taskId = e.target.parentElement.dataset.id
+function deleteTask(taskId) {
     tasks = tasks.filter(task => task.id !== taskId)
     saveTasks(tasks)
     loadTasks(currFilter)
 }
 
-const toggleCompletion = function (e) {
-    let taskId = e.target.parentElement.dataset.id
+const toggleCompletion = function (taskId) {
     let taskIndex = tasks.findIndex(task => task.id === taskId)
     let taskCompleted = tasks[taskIndex].completed
     tasks[taskIndex].completed = !taskCompleted
