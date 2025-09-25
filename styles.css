@@ -8,6 +8,7 @@
 :root {
     --black: rgb(22, 22, 22);
     --white: rgb(250, 250, 250);
+    --grey: rgb(220, 220, 220);
 }
 
 /* --------------------------------------top-container--- */
@@ -23,13 +24,95 @@
 /* --------------------------------------header--- */
 
 header {
-    height: 60px;
+    height: 70px;
     background-color: var(--black);
     color: var(--white);
-    padding: 6px 20px;
+    font-size: 2.15rem;
+    letter-spacing: 5px;
+    padding: 0px 20px;
+}
+
+#main-title {
+    margin: 16px 12px;
+    padding: 0px 20px;
+    font-size: 2rem;
 }
 
 /* --------------------------------------header--- */
+
+/* --------------------------------------add Task button--- */
+.add-task-container.large {
+    height: 70vh;
+    width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-task-container.large #addTaskBtn {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
+    /* border: 6px dashed rgb(88, 88, 88); */
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-task-container.large #addTaskBtn:hover {
+    background-color: rgb(225, 225, 225);
+}
+
+.add-task-container.large #addTaskSign {
+    font-size: 6rem;
+}
+
+.add-task-container.large #addTaskText {
+    font-size: 1.75rem;
+}
+
+/* -------------border style----- */
+
+.dashed {
+  --b: 3px;  /* border thickness */
+  --s: 40px; /* size of the dashes */
+  --c1: black;
+  --c2: white;
+  
+  width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+}
+.dashed::before {
+  content:"";
+  position: absolute;
+  inset: 0;
+  padding: var(--b);
+  background: 
+    repeating-conic-gradient(var(--c1) 0 25%,var(--c2) 0 50%) 
+    0 0/var(--s) var(--s) round;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ------------------border style-------- */
+
+
+
+
+/* --------------------------------------add Task button--- */
+
 
 /* --------------------------------------main------ */
 
@@ -63,11 +146,79 @@ main {
     flex-direction: column;
     background-color: var(--white);
     padding: 2rem;
+    height: 70vh;
+    width: 60vw;
 }
 
 .task-modal-form {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    padding: 0px 10px 0px 2px;
+}
+
+.task-modal-header {
+    display: flex;
+}
+
+.task-modal-header #task-header-title {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.task-modal-header #closeBtn {
+    margin-left: auto;
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    padding: 4px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task-modal-header #closeBtn:hover {
+    background-color: var(--grey);
+}
+
+.task-modal-form .form-input-section {
+    display: flex;
+    flex-direction: column;
+    margin: 12px 0px;
+}
+
+.task-modal-form .form-input-section label {
+    font-size: 1.2rem;
+}
+
+.task-modal-form .form-input-section .form-input {
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--grey);
+    /* color: var(--grey); */
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255), rgb(199, 199, 199));
+}
+
+.task-modal-form .form-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    gap: 8px;
+}
+
+.task-modal-form .form-btns button {
+    background-color: var(--grey);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.task-modal-form .form-btns button:hover {
+    background-color: rgb(200, 200, 200);
 }
 
 /* --------------------------------------task modal ------- */
@@ -101,8 +252,16 @@ main {
 .task-selector-container {
     display: flex;
     padding: 1rem;
-    gap: 1rem;
     list-style: none;
+}
+
+.task-selector {
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.task-selector:hover {
+    background-color: var(--grey);
 }
 
 /* --------------------------------------task selector ------- */
@@ -112,7 +271,19 @@ main {
 /* --------------------------------------footer------------ */
 
 footer {
+    height: 30px;
+    padding: 1rem;
+    background-color: rgb(220, 220, 220);
     margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+footer #github-src-link {
+    color: black;
+    text-decoration: none;
+    font-size: 1.5rem;
 }
 
 /* --------------------------------------footer------------ */

@@ -18,12 +18,12 @@ function toggleTaskModal(mode, event) {
     const submitTaskBtn = document.getElementById('submitTaskBtn')
     if (mode === 'add') {
         taskModal.classList.add('active')
-        submitTaskBtn.value = "Create New Task"
+        submitTaskBtn.textContent = "Create New Task"
         formMode = "add"
     }
     else if (mode === 'update') {
         taskModal.classList.add('active')
-        submitTaskBtn.value = "Update Task"
+        submitTaskBtn.textContent = "Update Task"
         formMode = "update"
         let taskId = event.target.parentElement.dataset.id
         populateFields(taskId)
@@ -78,7 +78,7 @@ function loadTasks(filter) {
 
     if (tasks.length === 0) {
 
-        addTaskContainer.classList.add('large')
+        addTaskContainer.classList.add('large','dashed')
         tasksContainer.style.display = 'none'
     }
     else {

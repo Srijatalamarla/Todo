@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Todo</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
             <h1>Todo</h1>
         </header>
         <main>
-            <h2>Tasks list</h2>
+            <h2 id="main-title">Tasks list</h2>
             <div class="add-task-container" id="add-task-container">
                 <button id="addTaskBtn" name="addTaskBtn" type="button" onclick="toggleTaskModal('add')">
                     <span id="addTaskSign">+</span>
@@ -42,25 +43,36 @@
             <div class="task-modal-container" id="task-modal-container">
                 <div class="task-modal" id="task-modal">
                     <div class="task-modal-header">
-                        <p>Task</p>
-                        <button type="button" id="closeBtn" onclick="toggleTaskModal('close')">x</button>
+                        <p id="task-header-title">Task</p>
+                        <button type="button" id="closeBtn" onclick="toggleTaskModal('close')"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <form id="task-modal-form" class="task-modal-form" action="">
-                        <label for="taskTitle">Title</label>
-                        <input type="text" name="taskTitle" id="taskTitle" placeholder="Write a title for your task..." required></input>
-                        <label for="taskDesc">Description</label>
-                        <textarea name="taskDesc" id="taskDesc" placeholder="Describe your thoughts..."></textarea>
+                        <div class="form-input-section">
+                            <label for="taskTitle">Title</label>
+                            <input type="text" name="taskTitle" id="taskTitle" class="form-input" placeholder="Write a title for your task..." required></input>
+                        </div>
+
+                        <div class="form-input-section">
+                            <label for="taskDesc">Description</label>
+                            <textarea name="taskDesc" id="taskDesc" class="form-input" placeholder="Describe your thoughts..." rows="7"></textarea>
+                        </div>
                 
-                        <label for="taskDeadline">Deadline</label>
-                        <input type="date" name="taskDeadline" id="taskDeadline"></input>
-                        <input type="submit" id="submitTaskBtn"></input>
-                        <button type="button" onclick="toggleTaskModal('close')">Cancel</button>
+                        <div class="form-input-section">
+                            <label for="taskDeadline">Deadline</label>
+                            <input type="date" name="taskDeadline" id="taskDeadline" class="form-input"></input>
+                        </div>
+
+                        <div class="form-btns form-input-section">
+                            <button type="submit" id="submitTaskBtn"></button>
+                            <button type="button" onclick="toggleTaskModal('close')">Cancel</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </main>
         <footer>
-            <a href="https://github.com/Srijatalamarla/Todo">Source</a>
+            <a href="https://github.com/Srijatalamarla/Todo" id="github-src-link"><i class="fa-brands fa-github"></i></a>
         </footer>
         
     </div>
