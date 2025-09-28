@@ -249,7 +249,8 @@ main {
     border-radius: 8px;
     border: none;
     font-size: 1rem;
-    background-image: linear-gradient(to bottom right, rgba(255, 255, 255), rgb(199, 199, 199));
+    color: rgb(25, 25, 25);
+    background-image: linear-gradient(to bottom right, rgb(245, 245, 245), rgb(199, 199, 199));
 }
 
 .task-modal-form .form-btns {

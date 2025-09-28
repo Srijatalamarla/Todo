@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTasks(currFilter)
 })
 
+document.addEventListener('click', (e) => {
+    if(e.target == taskModal) {
+        taskModal.classList.remove('active')
+        document.getElementById('task-modal-form').reset() //clear all fields in form if any
+    }
+})
+
 document.querySelectorAll(".task-selector").forEach(selector => {
     selector.addEventListener('click', () => {
         currFilter = selector.getAttribute('data-id')
