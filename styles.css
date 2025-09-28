@@ -198,6 +198,8 @@ main {
     padding: 2rem;
     height: 70vh;
     width: 60vw;
+    border: none;
+    border-radius: 10px;
 }
 
 .task-modal-form {
@@ -276,8 +278,14 @@ main {
 
 /* --------------------------------------task items container ------- */
 
+.task-items-container {
+    padding: 20px 5px;
+}
+
 .task-items-list {
     display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 
@@ -291,6 +299,13 @@ main {
     width: 350px;
     padding: 1rem;
     box-shadow: 0px 0px 10px 1px rgba(225, 225, 225);
+    transition: background-color 0.3s ease;
+}
+
+.task-item.completed{
+    text-decoration: line-through;
+    opacity: 0.5;
+    background-color: var(--grey);
 }
 
 .task-item-btn-container {
@@ -311,6 +326,10 @@ main {
 
 .task-item .task-item-desc, .task-item .task-item-deadline {
     color: rgba(20, 20, 20, 0.8);
+}
+
+.task-item .task-details {
+    flex: 1;
 }
 
 .task-item-btn {

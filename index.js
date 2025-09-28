@@ -17,6 +17,7 @@ document.querySelectorAll(".task-selector").forEach(selector => {
 })
 
 const addActiveStyle = (filter) => {
+    //add active style for task selector
     document.querySelectorAll('.task-selector').forEach(selector => {
         if(selector.dataset.id === filter)
             selector.classList.add('active')
@@ -42,10 +43,10 @@ function toggleTaskModal(mode, taskId) {
 
         populateFields(taskId)
 
-        updateTaskBtn.addEventListener('click', (e) => {
+        updateTaskBtn.onclick = (e) => {
             e.preventDefault();
             updateTask(taskId)    
-        });
+        };
     }
     else if (mode === 'close') {
         taskModal.classList.remove('active')
@@ -112,12 +113,14 @@ function loadTasks(filter) {
             taskItem.innerHTML =
                 `
                 <p class="task-item-title">${task.title}</p>
-                <p class="task-item-desc">
-                    <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
-                </p>
-                <p class="task-item-deadline">
-                    <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
-                </p>
+                <div class="task-details">
+                    <p class="task-item-desc">
+                        <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
+                    </p>
+                    <p class="task-item-deadline">
+                        <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
+                    </p>
+                </div>
                 <div class="task-item-btn-container">
                     <button type="button" class="task-item-btn" id="task-completion-btn" onclick="toggleCompletion('${task.id}')">
                         ${task.completed === true ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-check"></i>'}
@@ -127,6 +130,11 @@ function loadTasks(filter) {
                 </div>
             `
             taskItem.classList.add('task-item')
+            if(filter === "all") {
+                //all items 
+                // adding completed class to item - so that completed and pending tasks are differentiated when on all items page
+                taskItem.classList.add(task.completed ? 'completed' : 'pending')
+            }
             taskItem.setAttribute('data-id', `${task.id}`)
 
             tasksList.append(taskItem)
