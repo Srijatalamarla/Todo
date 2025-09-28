@@ -1,5 +1,6 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 const taskModal = document.getElementById('task-modal-container')
+const viewModal = document.querySelector('.view-task-modal-container')
 let currFilter = "all"
 
 //event listeners
@@ -9,9 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('click', (e) => {
-    if(e.target == taskModal) {
+    if(taskModal && e.target === taskModal) {
         taskModal.classList.remove('active')
         document.getElementById('task-modal-form').reset() //clear all fields in form if any
+    }
+    if(viewModal && e.target === viewModal) {
+        viewModal.style.display = 'none'
     }
 })
 
@@ -121,10 +125,10 @@ function loadTasks(filter) {
             const taskItem = document.createElement('li')
             taskItem.innerHTML =
                 `
-                <p class="task-item-title">${task.title}</p>
+                <p class="task-item-title" onclick="viewTaskModal('${task.id}')">${task.title.substring(0, 30) + '...'} <i class="fa-solid fa-arrow-up-right-from-square"></i></p>
                 <div class="task-details">
                     <p class="task-item-desc">
-                        <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
+                        <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description.substring(0, 30) + ' ...'}
                     </p>
                     <p class="task-item-deadline">
                         <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
@@ -168,6 +172,43 @@ function updateTask(taskId) {
     saveTasks(tasks)
     toggleTaskModal('close')
     alert('Task updated successfully')
+}
+
+function viewTaskModal(taskId) {
+    console.log("View task")
+
+    const task = tasks.find((task) => task.id === taskId)
+    console.log(task)
+
+    viewModal.style.display = 'flex'
+    viewModal.innerHTML = `` //clear previous task
+
+    const viewTaskModal = document.createElement('div')
+
+    viewTaskModal.innerHTML = 
+    `
+        <div class="task-modal-header">
+            <p class="task-title">${task.title}</p>
+            <button type="button" id="closeBtn" onclick="viewModal.style.display = 'none'"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="task-details">
+            <p class="task-desc">
+                <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
+            </p>
+            <p class="task-deadline">
+                <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
+            </p>
+            <p class="task-completion">
+                ${task.completed  ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'} completion
+            </p>
+        </div>
+        <div class="task-btn-container">
+            <button type="button" onclick="viewModal.style.display = 'none'">Close</button>
+        </div>
+    `
+
+    viewTaskModal.classList.add('view-task-modal')
+    viewModal.appendChild(viewTaskModal)
 }
 
 function populateFields(taskId) {
