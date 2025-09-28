@@ -85,6 +85,8 @@ function addNewTask() {
 
     saveTasks(tasks)
     toggleTaskModal('close')
+
+    alert('Task added successfully')
 }
 
 function loadTasks(filter) {
@@ -133,7 +135,7 @@ function loadTasks(filter) {
                         ${task.completed === true ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-check"></i>'}
                     </button>
                     <button type="button" class="task-item-btn" id="task-edit-btn" onclick="toggleTaskModal('update', '${task.id}')"><i class="fa-solid fa-pen"></i></button>
-                    <button type="button" class="task-item-btn" id="task-delete-btn" onclick="deleteTask('${task.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <button type="button" class="task-item-btn" id="task-delete-btn" onclick="if(confirm('Are you sure to delete this task ?')) deleteTask('${task.id}')"><i class="fa-solid fa-trash"></i></button>
                 </div>
             `
             taskItem.classList.add('task-item')
@@ -165,6 +167,7 @@ function updateTask(taskId) {
 
     saveTasks(tasks)
     toggleTaskModal('close')
+    alert('Task updated successfully')
 }
 
 function populateFields(taskId) {
