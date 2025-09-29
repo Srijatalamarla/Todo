@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('click', (e) => {
-    if(taskModal && e.target === taskModal) {
+    if (taskModal && e.target === taskModal) {
         taskModal.classList.remove('active')
         document.getElementById('task-modal-form').reset() //clear all fields in form if any
     }
-    if(viewModal && e.target === viewModal) {
-        viewModal.style.display = 'none'
+    if (viewModal && e.target === viewModal) {
+        viewModal.classList.remove('active')
     }
 })
 
@@ -30,7 +30,7 @@ document.querySelectorAll(".task-selector").forEach(selector => {
 const addActiveStyle = (filter) => {
     //add active style for task selector
     document.querySelectorAll('.task-selector').forEach(selector => {
-        if(selector.dataset.id === filter)
+        if (selector.dataset.id === filter)
             selector.classList.add('active')
         else
             selector.classList.remove('active')
@@ -56,7 +56,7 @@ function toggleTaskModal(mode, taskId) {
 
         updateTaskBtn.onclick = (e) => {
             e.preventDefault();
-            updateTask(taskId)    
+            updateTask(taskId)
         };
     }
     else if (mode === 'close') {
@@ -99,7 +99,7 @@ function loadTasks(filter) {
     const mainTitleContainer = document.querySelector('.main-title-container')
 
     if (tasks.length === 0) {
-        addTaskContainer.classList.add('large','dashed')
+        addTaskContainer.classList.add('large', 'dashed')
         tasksContainer.style.display = 'none'
         mainTitleContainer.style.display = 'block'
     }
@@ -143,7 +143,7 @@ function loadTasks(filter) {
                 </div>
             `
             taskItem.classList.add('task-item')
-            if(filter === "all") {
+            if (filter === "all") {
                 //all items 
                 // adding completed class to item - so that completed and pending tasks are differentiated when on all items page
                 taskItem.classList.add(task.completed ? 'completed' : 'pending')
@@ -180,16 +180,16 @@ function viewTaskModal(taskId) {
     const task = tasks.find((task) => task.id === taskId)
     console.log(task)
 
-    viewModal.style.display = 'flex'
+    viewModal.classList.add('active')
     viewModal.innerHTML = `` //clear previous task
 
     const viewTaskModal = document.createElement('div')
 
-    viewTaskModal.innerHTML = 
-    `
+    viewTaskModal.innerHTML =
+        `
         <div class="task-modal-header">
             <p class="task-title">${task.title}</p>
-            <button type="button" id="closeBtn" onclick="viewModal.style.display = 'none'"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" id="closeBtn" onclick="viewModal.classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="task-details">
             <p class="task-desc">
@@ -199,11 +199,11 @@ function viewTaskModal(taskId) {
                 <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
             </p>
             <p class="task-completion">
-                ${task.completed  ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'} completion
+                ${task.completed ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'} completion
             </p>
         </div>
         <div class="task-btn-container">
-            <button type="button" onclick="viewModal.style.display = 'none'">Close</button>
+            <button type="button" onclick="viewModal.classList.remove('active')">Close</button>
         </div>
     `
 

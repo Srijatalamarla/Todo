@@ -115,20 +115,20 @@ header {
   aspect-ratio: 1;
   position: relative;
 }
+
 .dashed::before {
-  content:"";
-  position: absolute;
-  inset: 0;
-  padding: var(--b);
-  background: 
-    repeating-conic-gradient(var(--c1) 0 25%,var(--c2) 0 50%) 
-    0 0/var(--s) var(--s) round;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--b);
+    background:
+        repeating-conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%) 0 0/var(--s) var(--s) round;
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
 /* ------------------border style-------- */
@@ -165,7 +165,7 @@ main {
 /* -------------------------------------task container -------- */
 
 .tasks-container {
-    margin: 0px 20px;   
+    margin: 0px 20px;
 }
 
 
@@ -180,15 +180,22 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 #task-modal-container.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 #task-modal {
@@ -200,6 +207,15 @@ main {
     width: 60vw;
     border: none;
     border-radius: 10px;
+
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+#task-modal-container.active #task-modal {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .task-modal-form {
@@ -299,12 +315,12 @@ main {
     display: flex;
     flex-direction: column;
     width: 350px;
+    height: 200px;
     padding: 1rem;
     box-shadow: 0px 0px 10px 1px rgba(225, 225, 225);
-    transition: background-color 0.3s ease;
 }
 
-.task-item.completed{
+.task-item.completed {
     text-decoration: line-through;
     opacity: 0.5;
     background-color: var(--grey);
@@ -333,6 +349,7 @@ main {
 
 .task-item .task-item-desc, .task-item .task-item-deadline {
     color: rgba(20, 20, 20, 0.8);
+    margin-bottom: 4px;
 }
 
 .task-item .task-details {
@@ -347,7 +364,7 @@ main {
     cursor: pointer;
     padding: 8px 12px;
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease;
 }
 
@@ -396,11 +413,22 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     background-color: rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.view-task-modal-container.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .view-task-modal {
@@ -412,6 +440,16 @@ main {
     width: 50vw;
     border: none;
     border-radius: 10px;
+
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+.view-task-modal-container.active .view-task-modal {
+    transform: scale(1);
+    opacity: 1;
 }
 
 .view-task-modal .task-title {
@@ -423,6 +461,15 @@ main {
 
 .view-task-modal .task-details {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0px 8px 0px 0px;
+    margin-top: 1rem;
+}
+
+.view-task-modal .task-desc {
+    text-align: justify;
 }
 
 .view-task-modal .task-btn-container {
@@ -435,7 +482,8 @@ main {
 }
 
 .view-task-modal .task-btn-container button {
-    width: 20%;
+    width: 30%;
+    font-size: 1rem;
     background-color: var(--grey);
     border: none;
     padding: 6px 10px;
@@ -476,6 +524,14 @@ footer #github-src-link {
 @media screen and (max-width: 768px) {
     .task-item {
         width: 200px;
+        height: 250px;
     }
-    
+
+}
+
+@media (max-width: 500px) {
+    .task-items-list {
+        justify-content: center;
+    }
+
 }
