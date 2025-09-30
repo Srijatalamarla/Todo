@@ -2,7 +2,8 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: Comic sans MS, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: Comic sans MS, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: "Comic Relief", system-ui;
 }
 
 :root {
@@ -203,7 +204,6 @@ main {
     flex-direction: column;
     background-color: var(--white);
     padding: 2rem;
-    height: 70vh;
     width: 60vw;
     border: none;
     border-radius: 10px;
@@ -527,11 +527,23 @@ footer #github-src-link {
         height: 250px;
     }
 
+    #main-title {
+        padding: 0px 10px ;
+    }
+
+    .add-task-container {
+        margin: 0 1rem;
+    }
+
 }
 
 @media (max-width: 500px) {
     .task-items-list {
         justify-content: center;
+    }
+
+    #task-modal {
+        width: auto;
     }
 
 }
