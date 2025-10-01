@@ -436,7 +436,6 @@ main {
     flex-direction: column;
     background-color: var(--white);
     padding: 2rem;
-    height: 60vh;
     width: 50vw;
     border: none;
     border-radius: 10px;
@@ -533,6 +532,10 @@ footer #github-src-link {
 
     .add-task-container {
         margin: 0 1rem;
+    }
+
+    .view-task-modal {
+        width: 90vw;
     }
 
 }
