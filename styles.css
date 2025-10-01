@@ -522,8 +522,8 @@ footer #github-src-link {
 
 @media screen and (max-width: 768px) {
     .task-item {
-        width: 200px;
-        height: 280px;
+        width: 14rem;
+        height: 18rem;
     }
 
     #main-title {
