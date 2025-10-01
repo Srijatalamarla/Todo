@@ -131,7 +131,7 @@ function loadTasks(filter) {
                         <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description.substring(0, 30) + ' ...'}
                     </p>
                     <p class="task-item-deadline">
-                        <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
+                        <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : convertDateToWords(task.deadline)}
                     </p>
                 </div>
                 <div class="task-item-btn-container">
@@ -152,6 +152,13 @@ function loadTasks(filter) {
 
             tasksList.append(taskItem)
         });
+
+        if(filteredTasks.length === 0) {
+            tasksList.innerHTML = 
+            `
+                <p class="no-items">No ${filter} tasks</p>
+            `
+        }
     }
 }
 
@@ -196,7 +203,7 @@ function viewTaskModal(taskId) {
                 <i class="fa-regular fa-clipboard"></i>   ${!task.description ? "---" : task.description}
             </p>
             <p class="task-deadline">
-                <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : task.deadline}
+                <i class="fa-solid fa-calendar-day"></i>  ${!task.deadline ? "---" : convertDateToWords(task.deadline)}
             </p>
             <p class="task-completion">
                 ${task.completed ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'} completion
@@ -247,3 +254,7 @@ const uid = function () {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
+const convertDateToWords = (date) => {
+    var dateArr = new Date(date).toString().split(' ').slice(1, 4)
+    return dateArr[1] + ' ' + dateArr[0] + ' ' + dateArr[2]
+}
